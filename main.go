@@ -23,11 +23,13 @@ func main() {
 
 		sql, err := sql.Open("mysql", dsn)
 		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(fmt.Sprintf("Error connecting to database - %s", err.Error())))
 			return
 		}
 
 		if err = sql.Ping(); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(fmt.Sprintf("Error pinging database - %s", err.Error())))
 			return
 		}
